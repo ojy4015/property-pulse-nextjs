@@ -1,3 +1,4 @@
+// get unread message count by interacting with database
 'use server';
 
 import connectDB from '@/config/database';

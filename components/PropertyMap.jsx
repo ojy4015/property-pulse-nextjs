@@ -37,7 +37,6 @@ const PropertyMap = ({ property }) => {
         if (res.results.length === 0) {
           // No results found
           setGeocodeError(true);
-          setLoading(false);
           return;
         }
 
@@ -50,11 +49,11 @@ const PropertyMap = ({ property }) => {
           latitude: lat,
           longitude: lng,
         });
-
-        setLoading(false);
       } catch (error) {
         console.log(error);
         setGeocodeError(true);
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };
@@ -65,7 +64,7 @@ const PropertyMap = ({ property }) => {
   if (loading) return <Spinner loading={loading} />;
 
   if (geocodeError) {
-    return <div className='text-xl'>No location data found</div>;
+    return <div className="text-xl">No location data found</div>;
   }
 
   return (
@@ -79,10 +78,10 @@ const PropertyMap = ({ property }) => {
           zoom: 15,
         }}
         style={{ width: '100%', height: 500 }}
-        mapStyle='mapbox://styles/mapbox/streets-v9'
+        mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-        <Marker longitude={lng} latitude={lat} anchor='bottom'>
-          <Image src={pin} alt='location' width={40} height={40} />
+        <Marker longitude={lng} latitude={lat} anchor="bottom">
+          <Image src={pin} alt="location" width={40} height={40} />
         </Marker>
       </Map>
     )

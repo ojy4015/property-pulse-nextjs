@@ -1,3 +1,4 @@
+// context is a way to share state between components without passing it into a component by props
 'use client';
 import getUnreadMessageCount from '@/app/actions/getUnreadMessageCount';
 import { useSession } from 'next-auth/react';
@@ -12,6 +13,7 @@ export function GlobalProvider({ children }) {
 
   const { data: session } = useSession();
 
+  // making a call to the database through the getUnreadMessageCount action, getting the response
   useEffect(() => {
     if (session && session.user) {
       getUnreadMessageCount().then((res) => {

@@ -1,3 +1,8 @@
+// server actions allow us to run server side functions that run on the server
+// we submit directly to an action using the action attribute
+// actions can also be run within a client components
+// actions can be invoked from form event handlers within a useeffect hook
+// actions are much more efficient and easier way in a single app
 'use server';
 import connectDB from '@/config/database';
 import Property from '@/models/Property';
@@ -17,12 +22,13 @@ async function addProperty(formData) {
 
   const { userId } = sessionUser;
 
-  // Access all values for amenities and images
+  // Access all values from amenities and images
   const amenities = formData.getAll('amenities');
   const images = formData.getAll('images').filter((image) => image.name !== '');
 
   // Create the propertyData object with embedded seller_info
   const propertyData = {
+    owner: userId,
     type: formData.get('type'),
     name: formData.get('name'),
     description: formData.get('description'),
@@ -46,7 +52,6 @@ async function addProperty(formData) {
       email: formData.get('seller_info.email'),
       phone: formData.get('seller_info.phone'),
     },
-    owner: userId,
   };
 
   const imageUrls = [];

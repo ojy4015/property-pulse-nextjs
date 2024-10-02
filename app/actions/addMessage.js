@@ -13,22 +13,22 @@ async function addMessage(previousState, formData) {
     return { error: 'You must be logged in to send a message' };
   }
 
-  const { user } = sessionUser;
+  const { userId } = sessionUser;
 
   const recipient = formData.get('recipient');
 
-  if (user.id === recipient) {
+  if (userId === recipient) {
     return { error: 'You can not send a message to yourself' };
   }
 
   const newMessage = new Message({
-    sender: user.id,
+    sender: userId,
     recipient,
     property: formData.get('property'),
     name: formData.get('name'),
     email: formData.get('email'),
     phone: formData.get('phone'),
-    body: formData.get('message'),
+    body: formData.get('body'),
   });
 
   await newMessage.save();
@@ -37,3 +37,35 @@ async function addMessage(previousState, formData) {
 }
 
 export default addMessage;
+
+//---------------------------------------------------
+
+// // The returned data is then picked up by the useActionState hook
+// // and replaces its previous state data with this returned data.
+// export async function createUser(prevState, formData) {
+//   const email = formData.get('email');
+
+//   if (!emailIsValid(email)) {
+//       return {
+//         message: "Unable to verify email"
+//       }
+//   }
+
+//   try {
+//     await createUser(email)
+
+//     return {
+//       message: "Successfully signed up"
+//     }
+//   } catch(e) {
+//     return {
+//       message: "Unable to create user"
+//     }
+//   }
+// }
+
+// //------------------------------------------------
+
+// // Now that this is in the hook's state,
+// // the server action can now access the state via the first argument which is known as ‘previousState’.
+// // This can then be passed to server functions to update that user's profile.

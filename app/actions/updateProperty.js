@@ -11,6 +11,10 @@ async function updateProperty(propertyId, formData) {
 
   const sessionUser = await getSessionUser();
 
+  if (!sessionUser || !sessionUser.userId) {
+    throw new Error('User ID is required');
+  }
+
   const { userId } = sessionUser;
 
   const existingProperty = await Property.findById(propertyId);
@@ -21,6 +25,7 @@ async function updateProperty(propertyId, formData) {
   }
 
   const propertyData = {
+    owner: userId,
     type: formData.get('type'),
     name: formData.get('name'),
     description: formData.get('description'),
@@ -44,7 +49,6 @@ async function updateProperty(propertyId, formData) {
       email: formData.get('seller_info.email'),
       phone: formData.get('seller_info.phone'),
     },
-    owner: userId,
   };
 
   const updatedProperty = await Property.findByIdAndUpdate(

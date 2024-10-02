@@ -1,3 +1,4 @@
+// loading시 isBookmarked상태 검사
 'use server';
 
 const { default: connectDB } = require('@/config/database');

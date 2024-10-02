@@ -1,0 +1,7 @@
+
+Next.js From Scratch 2024
+ brad traversy 강사 class
+
+This is the main project from my Next 14 From Scratch Course
+
+This is the second iteration of the app/course that uses server actions instead of API routes.

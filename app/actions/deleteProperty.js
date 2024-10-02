@@ -42,6 +42,7 @@ async function deleteProperty(propertyId) {
   // Proceed with property deletion
   await property.deleteOne();
 
+  // 전체 페이지를 재검증
   revalidatePath('/', 'layout');
 }
 
